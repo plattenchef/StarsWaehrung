@@ -2,7 +2,7 @@
 
 To use it in your Maven build add:
 
-```
+```xml
 	<repositories>
 		<repository>
 		    <id>jitpack.io</id>
@@ -12,7 +12,7 @@ To use it in your Maven build add:
 ```
 
 and the dependency:
-```
+```xml
 	<dependency>
 	    <groupId>com.github.plattenchef</groupId>
 	    <artifactId>StarsWaehrung</artifactId>

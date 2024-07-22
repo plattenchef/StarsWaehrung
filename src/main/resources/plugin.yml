@@ -1,0 +1,10 @@
+name: StarsWaehrung
+version: '${project.version}'
+main: de.mitoo.starswaehrung.StarsWaehrung
+api-version: '1.20'
+author: Mitoo
+commands:
+  stars:
+    description: Eine Währung
+    usage: /stars <set|give|see|take|reset> <player> [amount]
+    aliases: [star]

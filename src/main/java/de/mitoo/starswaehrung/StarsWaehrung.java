@@ -1,6 +1,5 @@
 package de.mitoo.starswaehrung;
 
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,12 +16,14 @@ public class StarsWaehrung extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        // Set the command executors
         getCommand("stars").setExecutor(new StarsCommand(this));
         getCommand("stars").setTabCompleter(new StarsTabCompleter());
 
-        this.getCommand("stars").setExecutor(new StarsCommand(this));
+        // Register events
         getServer().getPluginManager().registerEvents(this, this);
 
+        // Load the configuration
         saveDefaultConfig();
         String url = getConfig().getString("datenbank.url");
         String user = getConfig().getString("datenbank.user");
@@ -34,6 +35,7 @@ public class StarsWaehrung extends JavaPlugin implements Listener {
             return;
         }
 
+        // Initialize database and star manager
         try {
             databaseManager = new DatabaseManager(url, user, password);
             databaseManager.connect();
@@ -41,26 +43,26 @@ public class StarsWaehrung extends JavaPlugin implements Listener {
         } catch (Exception e) {
             getLogger().severe("Fehler beim Initialisieren der Datenbankverbindung: " + e.getMessage());
             getServer().getPluginManager().disablePlugin(this);
+            return;
         }
 
-
+        // Load player data for online players
         for (Player player : Bukkit.getOnlinePlayers()) {
             UUID playerId = player.getUniqueId();
             starManager.loadPlayerData(playerId);
         }
-
-
-        getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
     public void onDisable() {
+        // Save player data for online players
         if (starManager != null) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 UUID playerId = player.getUniqueId();
                 starManager.savePlayerData(playerId);
             }
         }
+        // Disconnect the database
         if (databaseManager != null) {
             databaseManager.disconnect();
         }

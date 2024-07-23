@@ -17,6 +17,9 @@ public class StarsWaehrung extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        getCommand("stars").setExecutor(new StarsCommand(this));
+        getCommand("stars").setTabCompleter(new StarsTabCompleter());
+
         this.getCommand("stars").setExecutor(new StarsCommand(this));
         getServer().getPluginManager().registerEvents(this, this);
 

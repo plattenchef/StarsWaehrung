@@ -26,7 +26,8 @@ public class StarManager {
     }
 
     public int getStars(UUID playerUUID) {
-        return databaseManager.getPlayerStars(playerUUID);
+        // Überprüfe, ob der Wert im lokalen Cache vorhanden ist
+        return playerStars.getOrDefault(playerUUID, databaseManager.getPlayerStars(playerUUID));
     }
 
     public void setStars(UUID playerUUID, int stars) {
@@ -36,13 +37,13 @@ public class StarManager {
 
     public void giveStars(UUID playerUUID, int amount) {
         int currentStars = getStars(playerUUID);
-        setStars(playerUUID, currentStars + amount);
-        databaseManager.getPlayerStars(playerUUID);
+        int newStars = currentStars + amount;
+        setStars(playerUUID, newStars);
     }
 
     public void takeStars(UUID playerUUID, int amount) {
         int currentStars = getStars(playerUUID);
-        setStars(playerUUID, Math.max(0, currentStars - amount));
-        databaseManager.getPlayerStars(playerUUID);
+        int newStars = Math.max(0, currentStars - amount);
+        setStars(playerUUID, newStars);
     }
 }

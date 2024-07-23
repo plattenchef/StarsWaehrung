@@ -33,8 +33,8 @@ public class StarsCommand implements CommandExecutor {
                 int currentAmount = plugin.getStars(playerId);
                 sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + "Du hast " + currentAmount + " ★");
             } else if (args.length == 2) {
-                String targetPlayer = args[1];
-                Player player = Bukkit.getPlayer(targetPlayer);
+                String targetPlayerName = args[1];
+                Player player = Bukkit.getPlayer(targetPlayerName);
 
                 if (player == null) {
                     sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Spieler nicht gefunden.");
@@ -71,7 +71,13 @@ public class StarsCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Verwendung: /stars set <player> <amount>");
                     return true;
                 }
-                int setAmount = Integer.parseInt(args[2]);
+                int setAmount;
+                try {
+                    setAmount = Integer.parseInt(args[2]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Ungültiger Betrag: " + args[2]);
+                    return true;
+                }
                 plugin.setStars(targetPlayerId, setAmount);
                 sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + "Die ★ von " + targetPlayer.getName() + " wurden auf " + setAmount + " ★ gesetzt");
                 break;
@@ -81,7 +87,13 @@ public class StarsCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Verwendung: /stars give <player> <amount>");
                     return true;
                 }
-                int giveAmount = Integer.parseInt(args[2]);
+                int giveAmount;
+                try {
+                    giveAmount = Integer.parseInt(args[2]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Ungültiger Betrag: " + args[2]);
+                    return true;
+                }
                 plugin.giveStars(targetPlayerId, giveAmount);
                 sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + targetPlayer.getName() + " hat " + giveAmount + " ★ erhalten");
                 break;
@@ -91,9 +103,24 @@ public class StarsCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Verwendung: /stars take <player> <amount>");
                     return true;
                 }
-                int takeAmount = Integer.parseInt(args[2]);
-                plugin.takeStars(targetPlayerId, takeAmount);
-                sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + targetPlayer.getName() + " wurden " + takeAmount + " ★ abgezogen");
+                int takeAmount;
+                try {
+                    takeAmount = Integer.parseInt(args[2]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Ungültiger Betrag: " + args[2]);
+                    return true;
+                }
+                int currentStars = plugin.getStars(targetPlayerId);
+
+                if (currentStars == 0) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Der Spieler hat keine ★, daher ist es nicht möglich etwas abzuziehen.");
+                } else if (takeAmount > currentStars) {
+                    plugin.takeStars(targetPlayerId, currentStars);
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + "Es wurden nur " + currentStars + " ★ abgezogen, da der Spieler nur so viel hat.");
+                } else {
+                    plugin.takeStars(targetPlayerId, takeAmount);
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + "Von " + targetPlayer.getName() + " wurden " + takeAmount + " ★ abgezogen.");
+                }
                 break;
 
             case "reset":

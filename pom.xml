@@ -37,6 +37,13 @@
             <goals>
               <goal>shade</goal>
             </goals>
+              <configuration>
+              <transformers>
+                  <transformer implementation = 'com.github.jitpack:gradle-simple:PR4-SNAPSHOT'>
+                      <mainClass>de.mitoo.starswaehrung.StarsWaehrung</mainClass> <!-- Passe dies an deine Hauptklasse an -->
+                  </transformer>
+              </transformers>
+              </configuration>
           </execution>
         </executions>
       </plugin>

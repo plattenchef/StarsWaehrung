@@ -43,6 +43,14 @@
                                     <mainClass>de.mitoo.starswaehrung.StarsWaehrung</mainClass> <!-- Passe dies an deine Hauptklasse an -->
                                 </transformer>
                             </transformers>
+                                <filters>
+                                    <filter>
+                                        <artifact>*:*</artifact>
+                                        <excludes>
+                                            <exclude>META-INF/MANIFEST.MF</exclude>
+                                        </excludes>
+                                    </filter>
+                                </filters>
                         </configuration>
                     </execution>
                 </executions>

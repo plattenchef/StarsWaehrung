@@ -1,4 +1,4 @@
-[![Release](https://jitpack.io/v/plattenchef/StarsWaehrung.svg)](https://jitpack.io/#plattenchef/StarsWaehrung)
+[![V2.0](https://jitpack.io/v/plattenchef/StarsWaehrung.svg)](https://jitpack.io/#plattenchef/StarsWaehrung)
 
 
 To use it in your Maven build add:
@@ -17,7 +17,7 @@ and the dependency:
 	<dependency>
 	    <groupId>com.github.plattenchef</groupId>
 	    <artifactId>StarsWaehrung</artifactId>
-	    <version>V1.4</version>
+	    <version>V2.0</version>
 	</dependency>
 ```
 

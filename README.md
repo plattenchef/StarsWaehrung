@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/plattenchef/StarsWaehrung.svg)](https://jitpack.io/#plattenchef/StarsWaehrung)
+[![Release](https://jitpack.io/v/plattenchef/StarsWaehrung.svg)](https://jitpack.io/#plattenchef/StarsWaehrung)
 
 
 To use it in your Maven build add:

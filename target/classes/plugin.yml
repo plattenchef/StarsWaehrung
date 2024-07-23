@@ -7,3 +7,19 @@ commands:
   stars:
     description: Eine Währung
     usage: /stars <set|give|see|take|reset> <player> [amount]
+permissions:
+  starswaehrung.set:
+    description: Erlaubt das Setzen von Sternen für einen Spieler
+    default: op
+  starswaehrung.give:
+    description: Erlaubt das Geben von Sternen an einen Spieler
+    default: op
+  starswaehrung.take:
+    description: Erlaubt das Abziehen von Sternen von einem Spieler
+    default: op
+  starswaehrung.reset:
+    description: Erlaubt das Zurücksetzen der Sterne eines Spielers
+    default: op
+  starswaehrung.see:
+    description: Erlaubt das Anzeigen der Sterne eines Spielers
+    default: op

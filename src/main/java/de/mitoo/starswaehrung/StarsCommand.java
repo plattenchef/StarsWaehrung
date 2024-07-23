@@ -19,31 +19,79 @@ public class StarsCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player) && args.length < 1) {
+            sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Verwendung: /stars <set|give|see|take|reset> <player> [amount]");
+            return true;
+        }
+
         if (args.length < 1) {
             sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Verwendung: /stars <set|give|see|take|reset> <player> [amount]");
             return true;
         }
 
         String action = args[0];
+        Player player = sender instanceof Player ? (Player) sender : null;
+
+        // Check permissions
+        switch (action.toLowerCase()) {
+            case "set":
+                if (player != null && !player.hasPermission("starswaehrung.set")) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Du hast keine Berechtigung, diesen Befehl auszuführen.");
+                    return true;
+                }
+                break;
+
+            case "give":
+                if (player != null && !player.hasPermission("starswaehrung.give")) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Du hast keine Berechtigung, diesen Befehl auszuführen.");
+                    return true;
+                }
+                break;
+
+            case "take":
+                if (player != null && !player.hasPermission("starswaehrung.take")) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Du hast keine Berechtigung, diesen Befehl auszuführen.");
+                    return true;
+                }
+                break;
+
+            case "reset":
+                if (player != null && !player.hasPermission("starswaehrung.reset")) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Du hast keine Berechtigung, diesen Befehl auszuführen.");
+                    return true;
+                }
+                break;
+
+            case "see":
+                if (player != null && !player.hasPermission("starswaehrung.see")) {
+                    sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Du hast keine Berechtigung, diesen Befehl auszuführen.");
+                    return true;
+                }
+                break;
+
+            default:
+                sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Unbekannter Befehl: " + action);
+                return true;
+        }
 
         if ("see".equalsIgnoreCase(action)) {
             if (args.length == 1 && sender instanceof Player) {
-                Player player = (Player) sender;
-                UUID playerId = player.getUniqueId();
+                Player senderPlayer = (Player) sender;
+                UUID playerId = senderPlayer.getUniqueId();
                 int currentAmount = plugin.getStars(playerId);
                 sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + "Du hast " + currentAmount + " ★");
             } else if (args.length == 2) {
                 String targetPlayerName = args[1];
-                Player player = Bukkit.getPlayer(targetPlayerName);
+                Player targetPlayer = Bukkit.getPlayer(targetPlayerName);
 
-                if (player == null) {
+                if (targetPlayer == null) {
                     sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Spieler nicht gefunden.");
                     return true;
                 }
 
-                UUID playerId = player.getUniqueId();
+                UUID playerId = targetPlayer.getUniqueId();
                 int currentAmount = plugin.getStars(playerId);
-                sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + player.getName() + " hat " + currentAmount + " ★");
+                sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.GREEN + targetPlayer.getName() + " hat " + currentAmount + " ★");
             } else {
                 sender.sendMessage(ChatColor.AQUA + "LocoBroko " + ChatColor.DARK_GRAY + "| " + ChatColor.RED + "Verwendung: /stars see [player]");
             }

@@ -17,7 +17,7 @@ and the dependency:
 	<dependency>
 	    <groupId>com.github.plattenchef</groupId>
 	    <artifactId>StarsWaehrung</artifactId>
-	    <version>V2.0</version>
+	    <version>V2.5</version>
 	</dependency>
 ```
 

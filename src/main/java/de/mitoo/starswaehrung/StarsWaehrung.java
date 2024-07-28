@@ -1,5 +1,6 @@
 package de.mitoo.starswaehrung;
 
+import de.mitoo.starswaehrung.StarsWaehrungAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,6 +41,8 @@ public class StarsWaehrung extends JavaPlugin implements Listener {
             databaseManager = new DatabaseManager(url, user, password);
             databaseManager.connect();
             starManager = new StarManager(databaseManager);
+            // Initialize the API
+            StarsWaehrungAPI.initialize(starManager);
         } catch (Exception e) {
             getLogger().severe("Fehler beim Initialisieren der Datenbankverbindung: " + e.getMessage());
             getServer().getPluginManager().disablePlugin(this);
@@ -75,7 +78,8 @@ public class StarsWaehrung extends JavaPlugin implements Listener {
         starManager.loadPlayerData(playerId);
     }
 
-    public void setStars(UUID playerId, int amount) {
+
+public void setStars(UUID playerId, int amount) {
         starManager.setStars(playerId, amount);
         databaseManager.savePlayerData(playerId, amount);
     }

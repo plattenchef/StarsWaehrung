@@ -26,7 +26,6 @@ public class StarsTabCompleter implements TabCompleter {
             }
         } else if (args.length == 2) {
             if (MAIN_ACTIONS.contains(args[0].toLowerCase())) {
-                // Spieler-Namen für Aktionen, die einen Spieler erfordern
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (player.getName().toLowerCase().startsWith(args[1].toLowerCase())) {
                         completions.add(player.getName());
@@ -35,7 +34,6 @@ public class StarsTabCompleter implements TabCompleter {
             }
         } else if (args.length == 3) {
             if (MAIN_ACTIONS.subList(0, 4).contains(args[0].toLowerCase())) {
-                // Zahlen für set, give, take
                 if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("give") || args[0].equalsIgnoreCase("take")) {
                     completions.add("<amount>");
                 }
